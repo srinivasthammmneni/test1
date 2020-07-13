@@ -1,0 +1,86 @@
+Notes:
+1. Use Gehrkin/Cucumber BDD style to write the framework.
+2. Run it across Chrome and Safari
+3. Implement parallel execution.
+4. Source and destination should be parameterized.
+
+
+
+
+
+2. 1. Use Gehrkin/Cucumber BDD style to write the framework.
+
+Feature:  Login functionality of social networking site Facebook. 
+Given:  I am a facebook user. 
+When: I enter username as username. 
+And I enter the password as the password 
+Then I should be redirected to the home page of facebook 
+
+2. Run it across Chrome and Safari
+
+Scenario Outline: Multiple browsers
+  Given I navigate to my setup application
+  And I published an article
+  When I open client website with "<browser>"
+  Then I can see the published article with "<browser>"
+
+Examples:
+ | browser  |
+ | Chrome   |
+ | Safari   | 
+
+3. Implement parallel execution
+
+Feature: Refund item
+
+@chrome
+  Scenario: Jeff returns a faulty microwave
+    Given Jeff has bought a microwave for $100
+    And he has a receipt
+    When he returns the microwave
+    Then Jeff should be refunded $100
+
+Feature: Refund Money
+
+@firefox
+  Scenario: Jeff returns the money
+    Given Jeff has bought a microwave for $100
+    And he has a receipt
+    When he returns the microwave
+    Then Jeff should be refunded $100
+
+
+
+4. Source and destination should be parameterized.
+
+Feature: Select a Product
+  Install Checklist for Product
+
+  Rule Outline: verify functionA() on page type <type>
+
+    Scenario Outline: functionA() is called on page type <type> -- No errors
+      Given I load the site and go to a <type> page
+      Then I should see no errors are thrown
+
+    Scenario Outline: functionA() is called on page type <type> -- Minimal delay
+      Given I load the site and go to a <type> page
+      Then there is a minimal delay before calling functionA()
+
+    Scenario Outline: functionA() is called -- correct type <type>
+      Given I load the site and go to a <type> page
+      Then the page type is <type>
+
+  ...many more tests using an identical Examples array
+
+    Examples:
+      | type |
+      | "product" |
+      | "home" |
+      | "collection" |
+
+
+ 
+
+
+
+

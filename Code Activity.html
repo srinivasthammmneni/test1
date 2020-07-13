@@ -1,0 +1,57 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.Test;
+
+public class lowest_Flight_16 {
+WebDriver dr;
+boolean found = false; 
+@Test
+public void newTest() throws InterruptedException{
+
+System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"\\geckodriver\\geckodriver.exe");
+dr=new FirefoxDriver();
+/* System.setProperty("webdriver.chrome.driver", "D:\\Chromedriver\\chromedriver.exe");
+dr=new ChromeDriver();*/
+dr.manage().window().maximize();
+dr.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+dr.get("https://flights.makemytrip.com/)
+//Select origin
+    driver.findElement(By.id("ctl00_mainContent_ddl_originStation1_CTXT")).sendKeys("DEL");
+
+    driver.findElement(By.linkText("Delhi (DEL)")).click();
+
+    //Select destination
+    driver.findElement(By.id("ctl00_mainContent_ddl_destinationStation1_CTXT")).sendKeys("BOM");
+
+    driver.findElement(By.linkText("Mumbai (BOM)")).click();
+
+ //get all the prices from the table
+List<WebElement> price = dr.findElements(By.xpath("//*[@id='content']/div/div[5]/div[5]/div[2]/div/div[2]/div[2]/div[6]/p[1]/span[2]"));
+System.out.println(price.size());
+//put all the prices into array list and get the lowest prices
+ArrayList<Integer> prices=new ArrayList<Integer>();
+for(int i=0;i<price.size();i++){
+//System.out.println(price.get(i).getText());
+Integer priceInt = Integer.valueOf(price.get(i).getText().replace(",", ""));
+prices.add(priceInt);
+}
+Integer minPrice = Collections.min(prices);
+System.out.println("Min Price is "+minPrice);
+
+//compare all the prices with lowest price and click the corresponding book button
+List<WebElement> allBookbtn = dr.findElements(By.xpath("//*[@id='content']/div/div[5]/div[5]/div[2]/div/div[2]/div[2]/div[7]/p/a"));
+Thread.sleep(3000);
+for(int i=0;i<price.size();i++){
+Integer priceInt1 = Integer.valueOf(price.get(i).getText().replace(",", ""));
+//String price1 = price.get(i).getText();
+System.out.println(priceInt1);
+if(priceInt1==minPrice){
+allBookbtn.get(i).click();
+break;
+}
+} 
+}
+}
